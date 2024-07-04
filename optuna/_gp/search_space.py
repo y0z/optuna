@@ -97,7 +97,7 @@ def sample_normalized_params(
             param_values[:, i] = round_one_normalized_param(
                 param_values[:, i], scale_types[i], (bounds[i, 0], bounds[i, 1]), steps[i]
             )
-    return param_values
+    return np.clip(param_values, 0.0, 1.0)
 
 
 def get_search_space_and_normalized_params(
