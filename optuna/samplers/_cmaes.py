@@ -22,7 +22,9 @@ from optuna.distributions import BaseDistribution
 from optuna.distributions import FloatDistribution
 from optuna.distributions import IntDistribution
 from optuna.samplers import BaseSampler
+from optuna.samplers._base import _CONSTRAINTS_KEY
 from optuna.samplers._base import _INDEPENDENT_SAMPLING_WARNING_TEMPLATE
+from optuna.samplers._base import _process_constraints_after_trial
 from optuna.samplers._lazy_random_state import LazyRandomState
 from optuna.search_space import IntersectionSearchSpace
 from optuna.study._study_direction import StudyDirection
@@ -31,6 +33,8 @@ from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     import cmaes
 
     CmaClass = Union[cmaes.CMA, cmaes.SepCMA, cmaes.CMAwM]
@@ -197,6 +201,14 @@ class CmaEsSampler(BaseSampler):
                 used. Please see `the benchmark result
                 <https://github.com/optuna/optuna/pull/1229>`__ for the details.
 
+        constraints_func:
+            An optional function that computes the objective constraints. It must take a
+            :class:`~optuna.trial.FrozenTrial` and return the constraints. The return value must
+            be a sequence of :obj:`float` s. A value strictly larger than 0 means that a
+            constraints is violated. A value equal to or smaller than 0 is considered feasible.
+            If ``constraints_func`` returns more than one value for a trial, that trial is
+            considered feasible if and only if all values are equal to 0 or smaller.
+
         use_separable_cma:
             If this is :obj:`True`, the covariance matrix is constrained to be diagonal.
             Due to reduce the model complexity, the learning rate for the covariance matrix
@@ -255,6 +267,7 @@ class CmaEsSampler(BaseSampler):
         seed: int | None = None,
         *,
         consider_pruned_trials: bool = False,
+        constraints_func: Callable[[FrozenTrial], Sequence[float]] | None = None,
         restart_strategy: str | None = None,
         popsize: int | None = None,
         inc_popsize: int = -1,
@@ -286,6 +299,7 @@ class CmaEsSampler(BaseSampler):
         self._with_margin = with_margin
         self._lr_adapt = lr_adapt
         self._source_trials = source_trials
+        self._constraints_func = constraints_func
 
         if self._use_separable_cma:
             self._attr_prefix = "sepcma:"
@@ -308,6 +322,9 @@ class CmaEsSampler(BaseSampler):
 
         if self._lr_adapt:
             warn_experimental_argument("lr_adapt")
+
+        if constraints_func is not None:
+            warn_experimental_argument("constraints_func")
 
         if source_trials is not None and (x0 is not None or sigma0 is not None):
             raise ValueError(
@@ -393,16 +410,29 @@ class CmaEsSampler(BaseSampler):
         # TODO(c-bata): Reduce the number of wasted trials during parallel optimization.
         # See https://github.com/optuna/optuna/pull/920#discussion_r385114002 for details.
         solution_trials = self._get_solution_trials(completed_trials, optimizer.generation)
-
+        _constraint_vals = [
+            study._storage.get_trial_system_attrs(trial._trial_id).get(_CONSTRAINTS_KEY, ())
+            for trial in solution_trials
+        ]
         if len(solution_trials) >= optimizer.population_size:
             solutions: list[tuple[np.ndarray, float]] = []
-            for t in solution_trials[: optimizer.population_size]:
+            for t, c in zip(
+                solution_trials[: optimizer.population_size],
+                _constraint_vals[: optimizer.population_size],
+            ):
                 assert t.value is not None, "completed trials must have a value"
                 if isinstance(optimizer, cmaes.CMAwM):
                     x = np.array(t.system_attrs["x_for_tell"])
                 else:
                     x = trans.transform(t.params)
-                y = t.value if study.direction == StudyDirection.MINIMIZE else -t.value
+
+                is_feasible = (
+                    True if self._constraints_func is None else np.all(np.array(c) <= 0, axis=0)
+                )
+                if is_feasible:
+                    y = t.value if study.direction == StudyDirection.MINIMIZE else -t.value
+                else:
+                    y = np.inf
                 solutions.append((x, y))
 
             optimizer.tell(solutions)
@@ -636,6 +666,8 @@ class CmaEsSampler(BaseSampler):
         state: TrialState,
         values: Sequence[float] | None,
     ) -> None:
+        if self._constraints_func is not None:
+            _process_constraints_after_trial(self._constraints_func, study, trial, state)
         self._independent_sampler.after_trial(study, trial, state, values)
 
 
