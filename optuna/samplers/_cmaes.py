@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
 import copy
 import math
 import pickle
@@ -30,6 +29,7 @@ from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
     from typing import TypeAlias
 
     import cmaes
@@ -502,7 +502,7 @@ class CmaEsSampler(BaseSampler):
             # TODO(c-bata): Filter parameters by their values instead of checking search space.
             sign = 1 if direction == StudyDirection.MINIMIZE else -1
             source_solutions = [
-                (trans.transform(t.params), sign * cast(float, t.value))
+                (trans.transform(t.params), sign * cast("float", t.value))
                 for t in self._source_trials
                 if t.state in expected_states
                 and _is_compatible_search_space(trans, t.distributions)
