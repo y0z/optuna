@@ -145,6 +145,11 @@ class Study:
             If your study is multi-objective,
             use :attr:`~optuna.study.Study.best_trials` instead.
 
+        .. note::
+            In constrained optimization, the best trial is selected from trials that
+            satisfy all constraints. A trial is considered feasible when all of its
+            constraint values are less than or equal to 0.0.
+
         Returns:
             A :class:`~optuna.trial.FrozenTrial` object of the best trial.
 
@@ -163,6 +168,11 @@ class Study:
         It's called that a trial ``t0`` dominates another trial ``t1`` if
         ``all(v0 <= v1) for v0, v1 in zip(t0.values, t1.values)`` and
         ``any(v0 < v1) for v0, v1 in zip(t0.values, t1.values)`` are held.
+
+        .. note::
+            In constrained optimization, the best trials are selected from trials that
+            satisfy all constraints. A trial is considered feasible when all of its
+            constraint values are less than or equal to 0.0.
 
         Returns:
             A list of :class:`~optuna.trial.FrozenTrial` objects.
