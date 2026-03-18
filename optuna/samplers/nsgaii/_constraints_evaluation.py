@@ -1,15 +1,20 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 from optuna._warnings import optuna_warn
 from optuna.samplers._base import _CONSTRAINTS_KEY
-from optuna.study import StudyDirection
 from optuna.study._multi_objective import _dominates
-from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
+
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from optuna.study import StudyDirection
+    from optuna.trial import FrozenTrial
 
 
 def _constrained_dominates(
