@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Callable
-from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -11,11 +9,14 @@ from optuna.samplers.nsgaii._constraints_evaluation import _evaluate_penalty
 from optuna.samplers.nsgaii._constraints_evaluation import _validate_constraints
 from optuna.study import StudyDirection
 from optuna.study._multi_objective import _fast_non_domination_rank
-from optuna.trial import FrozenTrial
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
     from optuna.study import Study
+    from optuna.trial import FrozenTrial
 
 
 class NSGAIIElitePopulationSelectionStrategy:
