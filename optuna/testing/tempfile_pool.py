@@ -8,11 +8,15 @@ import copy
 import os
 import tempfile
 import threading
-from types import TracebackType
 from typing import Any
 from typing import cast
 from typing import ClassVar
 from typing import IO
+from typing import TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+    from types import TracebackType
 
 
 class NamedTemporaryFilePool:
