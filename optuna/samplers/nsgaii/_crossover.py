@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from collections.abc import Sequence
 from typing import Any
 from typing import TYPE_CHECKING
 
@@ -11,13 +9,16 @@ from optuna._transform import _SearchSpaceTransform
 from optuna.distributions import BaseDistribution
 from optuna.distributions import FloatDistribution
 from optuna.distributions import IntDistribution
-from optuna.samplers.nsgaii._crossovers._base import BaseCrossover
-from optuna.study import StudyDirection
-from optuna.trial import FrozenTrial
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from optuna.samplers.nsgaii._crossovers._base import BaseCrossover
     from optuna.study import Study
+    from optuna.study import StudyDirection
+    from optuna.trial import FrozenTrial
 
 
 _NUMERICAL_DISTRIBUTIONS = (
