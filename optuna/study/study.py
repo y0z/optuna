@@ -317,9 +317,9 @@ class Study:
             if len(feasible_trials) == 0:
                 raise ValueError("No feasible trials are completed yet.")
             if self.direction == StudyDirection.MAXIMIZE:
-                best_trial = max(feasible_trials, key=lambda t: cast(float, t.value))
+                best_trial = max(feasible_trials, key=lambda t: cast("float", t.value))
             else:
-                best_trial = min(feasible_trials, key=lambda t: cast(float, t.value))
+                best_trial = min(feasible_trials, key=lambda t: cast("float", t.value))
 
         return copy.deepcopy(best_trial) if deepcopy else best_trial
 
@@ -1647,9 +1647,9 @@ def get_all_study_summaries(
             directions = None
             if include_best_trial and len(completed_trials) != 0:
                 if direction == StudyDirection.MAXIMIZE:
-                    best_trial = max(completed_trials, key=lambda t: cast(float, t.value))
+                    best_trial = max(completed_trials, key=lambda t: cast("float", t.value))
                 else:
-                    best_trial = min(completed_trials, key=lambda t: cast(float, t.value))
+                    best_trial = min(completed_trials, key=lambda t: cast("float", t.value))
             else:
                 best_trial = None
         else:
