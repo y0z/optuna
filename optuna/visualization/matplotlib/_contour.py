@@ -133,7 +133,6 @@ class _LabelEncoder:
     def transform(self, labels: list[str]) -> list[int]:
         return [self.labels.index(label) for label in labels]
 
-
     def get_labels(self) -> list[str]:
         return self.labels
 

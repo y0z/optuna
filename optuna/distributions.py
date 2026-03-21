@@ -763,4 +763,3 @@ def _convert_old_distribution_to_new_distribution(
         optuna_warn(message, FutureWarning)
 
     return new_distribution
-
