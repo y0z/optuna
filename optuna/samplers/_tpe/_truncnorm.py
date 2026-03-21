@@ -45,7 +45,7 @@ from optuna.samplers._tpe._erf import erf
 _norm_pdf_C = math.sqrt(2 * math.pi)
 _norm_pdf_logC = math.log(_norm_pdf_C)
 _ndtri_exp_approx_C = math.sqrt(3) / math.pi
-_log_2 = math.log(2)
+
 
 
 def _log_sum(log_p: np.ndarray, log_q: np.ndarray) -> np.ndarray:
