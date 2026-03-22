@@ -2,13 +2,17 @@ from __future__ import annotations
 
 import math
 from typing import Any
+from typing import TYPE_CHECKING
 
 import numpy as np
 
-from optuna.distributions import BaseDistribution
 from optuna.distributions import CategoricalDistribution
 from optuna.distributions import FloatDistribution
 from optuna.distributions import IntDistribution
+
+
+if TYPE_CHECKING:
+    from optuna.distributions import BaseDistribution
 
 
 class _SearchSpaceTransform:
