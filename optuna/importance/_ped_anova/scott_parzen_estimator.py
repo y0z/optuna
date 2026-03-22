@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import numpy as np
+from typing import TYPE_CHECKING
 
-from optuna.distributions import BaseDistribution
 from optuna.distributions import CategoricalDistribution
 from optuna.distributions import FloatDistribution
 from optuna.distributions import IntDistribution
@@ -10,7 +10,11 @@ from optuna.samplers._tpe.parzen_estimator import _ParzenEstimator
 from optuna.samplers._tpe.parzen_estimator import _ParzenEstimatorParameters
 from optuna.samplers._tpe.probability_distributions import _BatchedDiscreteTruncNormDistributions
 from optuna.samplers._tpe.probability_distributions import _BatchedDistributions
-from optuna.trial import FrozenTrial
+
+
+if TYPE_CHECKING:
+    from optuna.distributions import BaseDistribution
+    from optuna.trial import FrozenTrial
 
 
 class _ScottParzenEstimator(_ParzenEstimator):
