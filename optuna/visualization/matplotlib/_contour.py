@@ -133,9 +133,6 @@ class _LabelEncoder:
     def transform(self, labels: list[str]) -> list[int]:
         return [self.labels.index(label) for label in labels]
 
-    def fit_transform(self, labels: list[str]) -> list[int]:
-        return self.fit(labels).transform(labels)
-
     def get_labels(self) -> list[str]:
         return self.labels
 
@@ -205,11 +202,11 @@ def _calculate_griddata(info: _SubContourInfo) -> tuple[np.ndarray, _PlotValues,
     if len(x_values) == 0 or len(y_values) == 0:
         return np.array([]), _PlotValues([], []), _PlotValues([], [])
 
-    xi, cat_param_labels_x, cat_param_pos_x, transformed_x_values = _calculate_axis_data(
+    xi, _, _, transformed_x_values = _calculate_axis_data(
         xaxis,
         x_values,
     )
-    yi, cat_param_labels_y, cat_param_pos_y, transformed_y_values = _calculate_axis_data(
+    yi, _, _, transformed_y_values = _calculate_axis_data(
         yaxis,
         y_values,
     )
