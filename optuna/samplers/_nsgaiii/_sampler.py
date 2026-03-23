@@ -18,12 +18,14 @@ from optuna.search_space import IntersectionSearchSpace
 from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
 
+
 if TYPE_CHECKING:
     from collections.abc import Callable
     from collections.abc import Sequence
-    import numpy as np
-    from optuna.distributions import BaseDistribution
 
+    import numpy as np
+
+    from optuna.distributions import BaseDistribution
     from optuna.study import Study
 
 
