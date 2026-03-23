@@ -13,6 +13,7 @@ from optuna.samplers.nsgaii._elite_population_selection_strategy import _rank_po
 if TYPE_CHECKING:
     from collections.abc import Callable
     from collections.abc import Sequence
+
     from optuna.samplers._lazy_random_state import LazyRandomState
     from optuna.study import Study
     from optuna.trial import FrozenTrial
