@@ -16,7 +16,6 @@ from optuna._experimental import warn_experimental_argument
 from optuna._imports import _LazyImport
 from optuna._transform import _SearchSpaceTransform
 from optuna._warnings import optuna_warn
-from optuna.distributions import BaseDistribution
 from optuna.distributions import FloatDistribution
 from optuna.distributions import IntDistribution
 from optuna.samplers import BaseSampler
@@ -24,7 +23,6 @@ from optuna.samplers._base import _INDEPENDENT_SAMPLING_WARNING_TEMPLATE
 from optuna.samplers._lazy_random_state import LazyRandomState
 from optuna.search_space import IntersectionSearchSpace
 from optuna.study._study_direction import StudyDirection
-from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
 
 
@@ -33,6 +31,9 @@ if TYPE_CHECKING:
     from typing import TypeAlias
 
     import cmaes
+
+    from optuna.distributions import BaseDistribution
+    from optuna.trial import FrozenTrial
 
     CmaClass: TypeAlias = cmaes.CMA | cmaes.SepCMA | cmaes.CMAwM
 else:

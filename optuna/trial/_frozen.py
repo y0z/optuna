@@ -451,7 +451,7 @@ class FrozenTrial(BaseTrial):
 
     @system_attrs.setter
     def system_attrs(self, value: Mapping[str, JSONSerializable]) -> None:
-        self._system_attrs = cast(dict[str, Any], value)
+        self._system_attrs = cast("dict[str, Any]", value)
 
     @property
     def last_step(self) -> int | None:

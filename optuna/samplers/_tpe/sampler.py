@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from collections.abc import Sequence
 from functools import lru_cache
 import json
 import math
@@ -17,8 +15,6 @@ from optuna._experimental import warn_experimental_argument
 from optuna._hypervolume import compute_hypervolume
 from optuna._hypervolume.hssp import _solve_hssp
 from optuna._warnings import optuna_warn
-from optuna.distributions import BaseDistribution
-from optuna.distributions import CategoricalChoiceType
 from optuna.logging import get_logger
 from optuna.samplers._base import _CONSTRAINTS_KEY
 from optuna.samplers._base import _INDEPENDENT_SAMPLING_WARNING_TEMPLATE
@@ -39,6 +35,11 @@ from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from optuna.distributions import BaseDistribution
+    from optuna.distributions import CategoricalChoiceType
     from optuna.study import Study
 
 
@@ -736,9 +737,9 @@ def _split_complete_trials_single_objective(
     trials: Sequence[FrozenTrial], study: Study, n_below: int
 ) -> tuple[list[FrozenTrial], list[FrozenTrial]]:
     if study.direction == StudyDirection.MINIMIZE:
-        sorted_trials = sorted(trials, key=lambda trial: cast(float, trial.value))
+        sorted_trials = sorted(trials, key=lambda trial: cast("float", trial.value))
     else:
-        sorted_trials = sorted(trials, key=lambda trial: cast(float, trial.value), reverse=True)
+        sorted_trials = sorted(trials, key=lambda trial: cast("float", trial.value), reverse=True)
     return sorted_trials[:n_below], sorted_trials[n_below:]
 
 
@@ -773,7 +774,7 @@ def _split_complete_trials_multi_objective(
         )
         indices_below = np.append(indices_below, selected_indices)
 
-    below_indices_set = set(cast(list, indices_below.tolist()))
+    below_indices_set = set(cast("list", indices_below.tolist()))
     below_trials = [trials[i] for i in range(len(trials)) if i in below_indices_set]
     above_trials = [trials[i] for i in range(len(trials)) if i not in below_indices_set]
     return below_trials, above_trials

@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import abc
 from typing import Any
+from typing import TYPE_CHECKING
 
-import optuna
 from optuna.samplers._base import BaseSampler
-from optuna.trial._frozen import FrozenTrial
 from optuna.trial._state import TrialState
+
+
+if TYPE_CHECKING:
+    from optuna.study import Study
+    from optuna.trial._frozen import FrozenTrial
 
 
 # TODO(gen740): Add the experimental decorator?
@@ -58,7 +62,7 @@ class BaseGASampler(BaseSampler, abc.ABC):
         self._population_size = value
 
     @abc.abstractmethod
-    def select_parent(self, study: optuna.Study, generation: int) -> list[FrozenTrial]:
+    def select_parent(self, study: Study, generation: int) -> list[FrozenTrial]:
         """Select parent trials from the population for the given generation.
 
         This method is called once per generation to select parents from
@@ -79,7 +83,7 @@ class BaseGASampler(BaseSampler, abc.ABC):
         """
         raise NotImplementedError
 
-    def get_trial_generation(self, study: optuna.Study, trial: FrozenTrial) -> int:
+    def get_trial_generation(self, study: Study, trial: FrozenTrial) -> int:
         """Get the generation number of the given trial.
 
         This method returns the generation number of the specified trial. If the generation number
@@ -127,7 +131,7 @@ class BaseGASampler(BaseSampler, abc.ABC):
         )
         return generation
 
-    def get_population(self, study: optuna.Study, generation: int) -> list[FrozenTrial]:
+    def get_population(self, study: Study, generation: int) -> list[FrozenTrial]:
         """Get the population of the given generation.
 
         Args:
@@ -147,7 +151,7 @@ class BaseGASampler(BaseSampler, abc.ABC):
             if trial.system_attrs.get(self._get_generation_key(), None) == generation
         ]
 
-    def get_parent_population(self, study: optuna.Study, generation: int) -> list[FrozenTrial]:
+    def get_parent_population(self, study: Study, generation: int) -> list[FrozenTrial]:
         """Get the parent population of the given generation.
 
         This method caches the parent population in the study's system attributes.

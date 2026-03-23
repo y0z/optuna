@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import datetime
 import math
 from typing import Any
+from typing import TYPE_CHECKING
 from unittest.mock import Mock
 from unittest.mock import patch
 import warnings
@@ -29,6 +29,10 @@ from optuna.trial import FrozenTrial
 from optuna.trial import Trial
 from optuna.trial import TrialState
 from optuna.trial._trial import _LazyTrialSystemAttrs
+
+
+if TYPE_CHECKING:
+    import datetime
 
 
 @pytest.mark.filterwarnings("ignore::FutureWarning")

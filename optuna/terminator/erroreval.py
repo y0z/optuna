@@ -65,9 +65,9 @@ class CrossValidationErrorEvaluator(BaseErrorEvaluator):
         assert len(trials) > 0
 
         if study_direction == StudyDirection.MAXIMIZE:
-            best_trial = max(trials, key=lambda t: cast(float, t.value))
+            best_trial = max(trials, key=lambda t: cast("float", t.value))
         else:
-            best_trial = min(trials, key=lambda t: cast(float, t.value))
+            best_trial = min(trials, key=lambda t: cast("float", t.value))
 
         best_trial_attrs = best_trial.system_attrs
         if _CROSS_VALIDATION_SCORES_KEY in best_trial_attrs:

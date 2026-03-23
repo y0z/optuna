@@ -3,11 +3,11 @@ from __future__ import annotations
 import copy
 from typing import TYPE_CHECKING
 
-from optuna.distributions import BaseDistribution
 from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from optuna.distributions import BaseDistribution
     from optuna.study import Study
 
 
