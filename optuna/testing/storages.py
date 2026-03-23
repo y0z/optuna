@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-from concurrent.futures import ThreadPoolExecutor
 from contextlib import AbstractContextManager
 from contextlib import contextmanager
 import os
 import socket
 import sys
 import threading
-from types import TracebackType
 from typing import Any
 from typing import Generator
 from typing import IO
@@ -23,6 +21,9 @@ from optuna.testing.tempfile_pool import NamedTemporaryFilePool
 
 
 if TYPE_CHECKING:
+    from concurrent.futures import ThreadPoolExecutor
+    from types import TracebackType
+
     import grpc
 else:
     from optuna._imports import _LazyImport
