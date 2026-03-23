@@ -2,13 +2,17 @@ from __future__ import annotations
 
 import datetime
 from typing import NamedTuple
+from typing import TYPE_CHECKING
 
 from optuna.logging import get_logger
 from optuna.samplers._base import _CONSTRAINTS_KEY
-from optuna.study import Study
 from optuna.trial import TrialState
 from optuna.visualization._plotly_imports import _imports
 from optuna.visualization._utils import _make_hovertext
+
+
+if TYPE_CHECKING:
+    from optuna.study import Study
 
 
 if _imports.is_successful():
