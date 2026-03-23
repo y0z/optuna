@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import numpy as np
 from typing import TYPE_CHECKING
+
+import numpy as np
 
 from optuna.distributions import CategoricalDistribution
 from optuna.distributions import FloatDistribution
