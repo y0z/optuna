@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from collections.abc import Sequence
 from typing import Any
 from typing import TYPE_CHECKING
 
 from optuna._experimental import warn_experimental_argument
-from optuna.distributions import BaseDistribution
 from optuna.samplers._ga import BaseGASampler
 from optuna.samplers._lazy_random_state import LazyRandomState
 from optuna.samplers._random import RandomSampler
@@ -23,6 +20,10 @@ from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from optuna.distributions import BaseDistribution
     from optuna.study import Study
 
 
