@@ -141,7 +141,7 @@ class EMMREvaluator(BaseImprovementEvaluator):
 
         # _gp module assumes that optimization direction is maximization
         sign = -1 if study_direction == StudyDirection.MINIMIZE else 1
-        score_vals = np.array([cast(float, t.value) for t in complete_trials]) * sign
+        score_vals = np.array([cast("float", t.value) for t in complete_trials]) * sign
         score_vals = gp.warn_and_convert_inf(score_vals)
         standarized_score_vals = (score_vals - score_vals.mean()) / max(
             sys.float_info.min, score_vals.std()
