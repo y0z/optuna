@@ -1,21 +1,22 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Callable
-from collections.abc import Sequence
 from itertools import combinations_with_replacement
 from typing import TYPE_CHECKING
 
 import numpy as np
 
-from optuna.samplers._lazy_random_state import LazyRandomState
 from optuna.samplers.nsgaii._constraints_evaluation import _validate_constraints
 from optuna.samplers.nsgaii._elite_population_selection_strategy import _rank_population
-from optuna.trial import FrozenTrial
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from optuna.samplers._lazy_random_state import LazyRandomState
     from optuna.study import Study
+    from optuna.trial import FrozenTrial
 
 
 # Define a coefficient for scaling intervals, used in _filter_inf() to replace +-inf.
