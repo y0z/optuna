@@ -153,6 +153,13 @@ class Study:
         Returns:
             A :class:`~optuna.trial.FrozenTrial` object of the best trial.
 
+        Raises:
+            RuntimeError:
+                If the study is multi-objective.
+            ValueError:
+                If no trials are completed yet, or if no feasible trials exist
+                in a constrained optimization.
+
         .. seealso::
             The :ref:`reuse_best_trial` tutorial provides a detailed example of how to use this
             method.
@@ -175,7 +182,9 @@ class Study:
             constraint values are less than or equal to 0.0.
 
         Returns:
-            A list of :class:`~optuna.trial.FrozenTrial` objects.
+            A list of :class:`~optuna.trial.FrozenTrial` objects. If no trials are
+            completed or if no feasible trials exist in a constrained optimization,
+            an empty list is returned.
         """
 
         # Check whether the study is constrained optimization.
