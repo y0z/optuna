@@ -1,14 +1,19 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 import pytest
 
 from optuna import create_study
 from optuna import trial
-from optuna.study import StudyDirection
 from optuna.study._multi_objective import _get_pareto_front_trials_by_trials
-from optuna.trial import FrozenTrial
+
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from optuna.study import StudyDirection
+    from optuna.trial import FrozenTrial
 
 
 def _trial_to_values(t: FrozenTrial) -> tuple[float, ...]:
