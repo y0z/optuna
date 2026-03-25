@@ -21,6 +21,7 @@ from optuna.trial import TrialState
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
+
     from optuna.study import Study
 
 
