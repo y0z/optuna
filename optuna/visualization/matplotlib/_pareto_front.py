@@ -1,14 +1,19 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 from optuna._experimental import experimental_func
-from optuna.study import Study
-from optuna.trial import FrozenTrial
 from optuna.visualization._pareto_front import _get_pareto_front_info
 from optuna.visualization._pareto_front import _ParetoFrontInfo
 from optuna.visualization.matplotlib._matplotlib_imports import _imports
+
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from optuna.study import Study
+    from optuna.trial import FrozenTrial
 
 
 if _imports.is_successful():
