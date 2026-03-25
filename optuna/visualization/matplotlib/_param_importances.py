@@ -1,17 +1,22 @@
 from __future__ import annotations
 
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 from optuna._experimental import experimental_func
-from optuna.importance._base import BaseImportanceEvaluator
 from optuna.logging import get_logger
-from optuna.study import Study
-from optuna.trial import FrozenTrial
 from optuna.visualization._param_importances import _get_importances_infos
 from optuna.visualization._param_importances import _ImportancesInfo
 from optuna.visualization.matplotlib._matplotlib_imports import _imports
+
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from optuna.importance._base import BaseImportanceEvaluator
+    from optuna.study import Study
+    from optuna.trial import FrozenTrial
 
 
 if _imports.is_successful():
