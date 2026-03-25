@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
 from typing import NamedTuple
 from typing import TYPE_CHECKING
 
@@ -12,11 +11,13 @@ from optuna.logging import get_logger
 from optuna.samplers._base import _CONSTRAINTS_KEY
 from optuna.study._study_direction import StudyDirection
 from optuna.trial import TrialState
+from optuna.visualization._plotly_imports import _imports
 
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from optuna.study import Study
-from optuna.visualization._plotly_imports import _imports
 
 
 if _imports.is_successful():
