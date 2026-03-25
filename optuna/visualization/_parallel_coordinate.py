@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Callable
 import math
-from typing import Any
 from typing import cast
 from typing import NamedTuple
 from typing import TYPE_CHECKING
@@ -16,8 +14,12 @@ from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from typing import Any
+
     from optuna.study import Study
     from optuna.trial import FrozenTrial
+
 from optuna.visualization._plotly_imports import _imports
 from optuna.visualization._utils import _check_plot_args
 from optuna.visualization._utils import _filter_nonfinite
