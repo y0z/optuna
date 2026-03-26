@@ -9,6 +9,7 @@ from optuna.visualization._parallel_coordinate import _get_parallel_coordinate_i
 from optuna.visualization._parallel_coordinate import _ParallelCoordinateInfo
 from optuna.visualization.matplotlib._matplotlib_imports import _imports
 
+
 if TYPE_CHECKING:
     from collections.abc import Callable
 
