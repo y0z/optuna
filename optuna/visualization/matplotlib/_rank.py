@@ -11,6 +11,7 @@ from optuna.visualization._rank import _RankPlotInfo
 from optuna.visualization._rank import _RankSubplotInfo
 from optuna.visualization.matplotlib._matplotlib_imports import _imports
 
+
 if TYPE_CHECKING:
     from collections.abc import Callable
 
