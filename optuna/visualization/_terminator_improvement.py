@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from typing import NamedTuple
+from typing import TYPE_CHECKING
 
 import tqdm
 
 import optuna
 from optuna._experimental import experimental_func
 from optuna.logging import get_logger
-from optuna.study.study import Study
 from optuna.terminator import BaseErrorEvaluator
 from optuna.terminator import BaseImprovementEvaluator
 from optuna.terminator import CrossValidationErrorEvaluator
@@ -16,6 +16,10 @@ from optuna.terminator.erroreval import StaticErrorEvaluator
 from optuna.terminator.improvement.evaluator import BestValueStagnationEvaluator
 from optuna.terminator.improvement.evaluator import DEFAULT_MIN_N_TRIALS
 from optuna.visualization._plotly_imports import _imports
+
+
+if TYPE_CHECKING:
+    from optuna.study.study import Study
 
 
 if _imports.is_successful():
