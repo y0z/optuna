@@ -1,17 +1,21 @@
 from __future__ import annotations
 
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 from optuna._experimental import experimental_func
-from optuna.study import Study
-from optuna.trial import FrozenTrial
 from optuna.visualization._rank import _get_rank_info
 from optuna.visualization._rank import _get_tick_info
 from optuna.visualization._rank import _RankPlotInfo
 from optuna.visualization._rank import _RankSubplotInfo
 from optuna.visualization.matplotlib._matplotlib_imports import _imports
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from optuna.study import Study
+    from optuna.trial import FrozenTrial
 
 
 if _imports.is_successful():
