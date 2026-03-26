@@ -11,6 +11,7 @@ from optuna.visualization._optimization_history import _OptimizationHistoryInfo
 from optuna.visualization._optimization_history import _ValueState
 from optuna.visualization.matplotlib._matplotlib_imports import _imports
 
+
 if TYPE_CHECKING:
     from collections.abc import Callable
     from collections.abc import Sequence
