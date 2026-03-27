@@ -11,6 +11,7 @@ from optuna.trial import TrialState
 if TYPE_CHECKING:
     from optuna.study import Study
     from optuna.trial import FrozenTrial
+
 from optuna.visualization._plotly_imports import _imports
 
 
