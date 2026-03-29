@@ -1,3 +1,5 @@
+# noqa: TC004
+
 import os
 import sys
 from types import ModuleType
