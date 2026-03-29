@@ -1,4 +1,4 @@
-# noqa: TC004
+from __future__ import annotations
 
 import os
 import sys
@@ -68,6 +68,9 @@ __all__ = [
 
 
 if TYPE_CHECKING:
+    # ruff: noqa: TC004
+    # NOTE(nabenabe): Technically speaking, the ignore above is valid for the whole file,
+    # but I simply used the one-liner fix for brevity.
     from optuna.integration.allennlp import AllenNLPExecutor
     from optuna.integration.allennlp import AllenNLPPruningCallback
     from optuna.integration.botorch import BoTorchSampler
