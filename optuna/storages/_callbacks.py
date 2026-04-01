@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from typing import Any
 
 import optuna
 from optuna._experimental import experimental_class
 from optuna._experimental import experimental_func
-from optuna.trial import FrozenTrial
+
+if TYPE_CHECKING:
+    from optuna.trial import FrozenTrial
 
 
 @experimental_class("2.8.0")
