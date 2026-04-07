@@ -125,8 +125,6 @@ $ conda install -c conda-forge optuna
 
 > [!IMPORTANT]
 > Optuna supports Python 3.9 or newer.
->
-> Also, we provide Optuna docker images on [DockerHub](https://hub.docker.com/r/optuna/optuna).
 
 ## Integrations
 
