@@ -484,7 +484,8 @@ class TPESampler(BaseSampler):
                         independent_sampler_name=self._random_sampler.__class__.__name__,
                         sampler_name=self.__class__.__name__,
                         fallback_reason=(
-                            "dynamic search space is not supported for `multivariate=True`"
+                            "`multivariate=True,group=False` does not support dynamic search space"
+                            " (but `multivariate=True,group=True` works)"
                         ),
                     )
                 )
