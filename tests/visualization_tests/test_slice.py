@@ -451,19 +451,11 @@ def test_color_map(direction: str) -> None:
     assert "reversecale" not in marker
 
 
-@pytest.mark.parametrize(
-    "x_val, y_val",
-    [
-        (None, 1.0),
-        (1.0, None),
-        (None, None),
-    ],
-)
-def test_generate_slice_subplot_filters_none_values(x_val: Any, y_val: Any) -> None:
+def test_generate_slice_subplot_filters_none_x_values_for_numerical_axis() -> None:
     subplot_info = _SliceSubplotInfo(
         param_name="param_a",
-        x=[x_val, 2.0],
-        y=[y_val, 3.0],
+        x=[None, 2.0],
+        y=[1.0, 3.0],
         trial_numbers=[0, 1],
         is_log=False,
         is_numerical=True,
@@ -474,3 +466,20 @@ def test_generate_slice_subplot_filters_none_values(x_val: Any, y_val: Any) -> N
     feasible_trace = traces[0]
     assert list(feasible_trace.x) == [2.0]
     assert list(feasible_trace.y) == [3.0]
+
+
+def test_generate_slice_subplot_keeps_none_category_values() -> None:
+    subplot_info = _SliceSubplotInfo(
+        param_name="param_a",
+        x=[None, "100"],
+        y=[1.0, 3.0],
+        trial_numbers=[0, 1],
+        is_log=False,
+        is_numerical=False,
+        x_labels=(None, "100"),
+        constraints=[True, True],
+    )
+    traces = _generate_slice_subplot(subplot_info)
+    feasible_trace = traces[0]
+    assert list(feasible_trace.x) == ["None", "'100'"]
+    assert list(feasible_trace.y) == [1.0, 3.0]

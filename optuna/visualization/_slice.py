@@ -231,6 +231,8 @@ def _generate_slice_subplot(subplot_info: _SliceSubplotInfo) -> list[Scatter]:
     for x, y, num, c in zip(
         subplot_info.x, subplot_info.y, subplot_info.trial_numbers, subplot_info.constraints
     ):
+        if subplot_info.is_numerical and x is None:
+            continue
         if c:
             feasible.x.append(x)
             feasible.y.append(y)
