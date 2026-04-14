@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from collections.abc import Sequence
 from typing import Any
+from typing import TYPE_CHECKING
 import warnings
 
-from _pytest.mark.structures import MarkDecorator
 import numpy as np
 import pytest
 
@@ -16,10 +14,18 @@ from optuna.distributions import CategoricalDistribution
 from optuna.distributions import FloatDistribution
 from optuna.distributions import IntDistribution
 from optuna.samplers import BaseSampler
-from optuna.study import Study
 from optuna.trial import FrozenTrial
 from optuna.trial import Trial
 from optuna.trial import TrialState
+
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from _pytest.mark.structures import MarkDecorator
+
+    from optuna.study import Study
 
 
 def parametrize_suggest_method(name: str) -> MarkDecorator:

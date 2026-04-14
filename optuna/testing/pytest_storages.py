@@ -8,21 +8,25 @@ import random
 import sys
 from time import sleep
 from typing import Any
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pytest
 
 import optuna
-from optuna._typing import JSONSerializable
 from optuna.distributions import CategoricalDistribution
 from optuna.distributions import FloatDistribution
 from optuna.exceptions import UpdateFinishedTrialError
-from optuna.storages import BaseStorage
 from optuna.storages._base import DEFAULT_STUDY_NAME_PREFIX
 from optuna.study._frozen import FrozenStudy
 from optuna.study._study_direction import StudyDirection
 from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
+
+
+if TYPE_CHECKING:
+    from optuna._typing import JSONSerializable
+    from optuna.storages import BaseStorage
 
 
 @pytest.fixture

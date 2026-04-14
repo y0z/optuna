@@ -1,12 +1,17 @@
 from __future__ import annotations
 
 from typing import NamedTuple
+from typing import TYPE_CHECKING
 
 from optuna.logging import get_logger
 from optuna.samplers._base import _CONSTRAINTS_KEY
-from optuna.study import Study
-from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
+
+
+if TYPE_CHECKING:
+    from optuna.study import Study
+    from optuna.trial import FrozenTrial
+
 from optuna.visualization._plotly_imports import _imports
 
 
@@ -89,9 +94,7 @@ def _get_intermediate_plot(info: _IntermediatePlotInfo) -> "go.Figure":
             x=tuple((x for x, _ in tinfo.sorted_intermediate_values)),
             y=tuple((y for _, y in tinfo.sorted_intermediate_values)),
             mode="lines+markers",
-            marker=(
-                default_marker if tinfo.feasible else {**default_marker, "color": "#CCCCCC"}  # type: ignore[dict-item]
-            ),
+            marker=(default_marker if tinfo.feasible else {**default_marker, "color": "#CCCCCC"}),
             name=f"Trial{tinfo.trial_number}",
         )
         for tinfo in trial_infos

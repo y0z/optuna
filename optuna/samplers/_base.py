@@ -1,27 +1,28 @@
 from __future__ import annotations
 
 import abc
-from collections.abc import Callable
-from collections.abc import Sequence
 from typing import Any
 from typing import TYPE_CHECKING
 
 import numpy as np
 
 from optuna._warnings import optuna_warn
-from optuna.distributions import BaseDistribution
-from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from optuna.distributions import BaseDistribution
     from optuna.study import Study
+    from optuna.trial import FrozenTrial
 
 
 _INDEPENDENT_SAMPLING_WARNING_TEMPLATE = (
     "The parameter `{param_name}` in Trial#{trial_number} is sampled independently "
     "using `{independent_sampler_name}` instead of `{sampler_name}`, potentially "
-    "degrading the optimization performance. This fallback happend because "
+    "degrading the optimization performance. This fallback happened because "
     "{fallback_reason}. You can suppress this warning by setting "
     "`warn_independent_sampling` to `False` in the constructor of `{sampler_name}` if "
     "this independent sampling is intended behavior."

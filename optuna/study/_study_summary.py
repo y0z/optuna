@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
-import datetime
 from typing import Any
 from typing import TYPE_CHECKING
 
 from optuna import logging
 from optuna._warnings import optuna_warn
-from optuna.study._study_direction import StudyDirection
 
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from datetime import datetime
+
+    from optuna.study._study_direction import StudyDirection
     from optuna.trial import FrozenTrial
 
 _logger = logging.get_logger(__name__)
@@ -61,7 +62,7 @@ class StudySummary:
         user_attrs: dict[str, Any],
         system_attrs: dict[str, Any],
         n_trials: int,
-        datetime_start: datetime.datetime | None,
+        datetime_start: datetime | None,
         study_id: int,
         *,
         directions: Sequence[StudyDirection] | None = None,

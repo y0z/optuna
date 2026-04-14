@@ -141,7 +141,7 @@ def _is_pareto_front_nd(unique_lexsorted_loss_values: np.ndarray) -> np.ndarray:
             loss_values[remaining_indices] < loss_values[new_nondominated_index], axis=1
         )
         remaining_indices = cast(
-            np.ndarray[tuple[int], np.dtype[np.signedinteger]],
+            "np.ndarray[tuple[int], np.dtype[np.signedinteger]]",
             remaining_indices[nondominated_and_not_top],
         )
 

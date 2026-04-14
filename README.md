@@ -31,12 +31,12 @@ Please take a few minutes to fill in [this survey](https://forms.gle/wVwLCQ9g6st
 All questions are optional. 🙇‍♂️
 
 <!-- TODO: when you add a new line, please delete the oldest line -->
+* **Mar 16, 2026**: Optuna 4.8.0 is out! Check out [the release note](https://github.com/optuna/optuna/releases/tag/v4.8.0) for details.
 * **Jan 19, 2026**: Optuna 4.7.0 is out! Check out [the release note](https://github.com/optuna/optuna/releases/tag/v4.7.0) for details.
 * **Nov 10, 2025**: A new article [Announcing Optuna 4.6](https://medium.com/optuna/announcing-optuna-4-6-a9e82183ab07) has been published.
 * **Oct 28, 2025**: A new article [AutoSampler: Full Support for Multi-Objective & Constrained Optimization](https://medium.com/optuna/autosampler-full-support-for-multi-objective-constrained-optimization-c1c4fc957ba2) has been published.
 * **Sep 22, 2025**: A new article [[Optuna v4.5] Gaussian Process-Based Sampler (GPSampler) Can Now Perform Constrained Multi-Objective Optimization](https://medium.com/optuna/optuna-v4-5-81e78d8e077a) has been published.
 * **Jun 16, 2025**: Optuna 4.4.0 has been released! Check out [the release blog](https://medium.com/optuna/announcing-optuna-4-4-ece661493126).
-* **May 26, 2025**: Optuna 5.0 roadmap has been published! See [the blog](https://medium.com/optuna/optuna-v5-roadmap-ac7d6935a878) for more details.
 
 ## :fire: Key Features
 
@@ -125,8 +125,6 @@ $ conda install -c conda-forge optuna
 
 > [!IMPORTANT]
 > Optuna supports Python 3.9 or newer.
->
-> Also, we provide Optuna docker images on [DockerHub](https://hub.docker.com/r/optuna/optuna).
 
 ## Integrations
 

@@ -1,19 +1,20 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
 from typing import Any
 from typing import TYPE_CHECKING
 
 from optuna._experimental import experimental_class
 from optuna._warnings import optuna_warn
-from optuna.distributions import BaseDistribution
 from optuna.samplers import BaseSampler
-from optuna.trial import FrozenTrial
-from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from optuna.distributions import BaseDistribution
     from optuna.study import Study
+    from optuna.trial import FrozenTrial
+    from optuna.trial import TrialState
 
 
 @experimental_class("2.4.0")

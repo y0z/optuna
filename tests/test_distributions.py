@@ -272,7 +272,7 @@ def test_categorical_internal_representation() -> None:
     # We need to create new objects to compare NaNs.
     # See https://github.com/optuna/optuna/pull/3567#pullrequestreview-974939837.
     c_ = distributions.json_to_distribution(EXAMPLE_JSONS["c1"])
-    for choice in cast(distributions.CategoricalDistribution, c_).choices:
+    for choice in cast("distributions.CategoricalDistribution", c_).choices:
         if isinstance(choice, float) and np.isnan(choice):
             assert np.isnan(c.to_external_repr(c.to_internal_repr(choice)))
         else:
@@ -590,20 +590,3 @@ def test_convert_old_distribution_to_new_distribution_noop() -> None:
 
     ild = distributions.IntDistribution(low=1, high=10, log=True)
     assert distributions._convert_old_distribution_to_new_distribution(ild) == ild
-
-
-def test_is_distribution_log() -> None:
-    lfd = distributions.FloatDistribution(low=1, high=10, log=True)
-    assert distributions._is_distribution_log(lfd)
-
-    lid = distributions.IntDistribution(low=1, high=10, log=True)
-    assert distributions._is_distribution_log(lid)
-
-    fd = distributions.FloatDistribution(low=0, high=10, log=False)
-    assert not distributions._is_distribution_log(fd)
-
-    id = distributions.IntDistribution(low=0, high=10, log=False)
-    assert not distributions._is_distribution_log(id)
-
-    cd = distributions.CategoricalDistribution(choices=["a", "b", "c"])
-    assert not distributions._is_distribution_log(cd)

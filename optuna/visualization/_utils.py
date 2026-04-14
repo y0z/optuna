@@ -95,13 +95,6 @@ def _is_numerical(trials: list[FrozenTrial], param: str) -> bool:
     return True
 
 
-def _get_param_values(trials: list[FrozenTrial], p_name: str) -> list[Any]:
-    values = [t.params[p_name] for t in trials if p_name in t.params]
-    if _is_numerical(trials, p_name):
-        return values
-    return list(map(str, values))
-
-
 def _get_skipped_trial_numbers(
     trials: list[FrozenTrial], used_param_names: Sequence[str]
 ) -> set[int]:

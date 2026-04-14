@@ -4,17 +4,21 @@ from collections.abc import Callable
 from collections.abc import Sequence
 from typing import Any
 from typing import NamedTuple
+from typing import TYPE_CHECKING
 
 import optuna
 from optuna import _deprecated
 from optuna._warnings import optuna_warn
 from optuna.samplers._base import _CONSTRAINTS_KEY
-from optuna.study import Study
 from optuna.study._multi_objective import _get_pareto_front_trials_by_trials
 from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
 from optuna.visualization._plotly_imports import _imports
 from optuna.visualization._utils import _make_hovertext
+
+
+if TYPE_CHECKING:
+    from optuna.study import Study
 
 
 if _imports.is_successful():
@@ -227,7 +231,7 @@ def _get_pareto_front_info(
         non_best_trials = []
 
     if len(best_trials) == 0:
-        what_trial = "completed" if has_constraints else "completed and feasible"
+        what_trial = "completed and feasible" if has_constraints else "completed"
         _logger.warning(f"Your study does not have any {what_trial} trials. ")
 
     _targets = targets

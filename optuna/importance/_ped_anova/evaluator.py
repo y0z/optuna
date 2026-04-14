@@ -1,21 +1,26 @@
 from __future__ import annotations
 
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 from optuna._deprecated import _DEPRECATION_WARNING_TEMPLATE
 from optuna._experimental import experimental_class
 from optuna._warnings import optuna_warn
-from optuna.distributions import BaseDistribution
 from optuna.importance._base import _get_distributions
 from optuna.importance._base import _get_filtered_trials
 from optuna.importance._base import _sort_dict_by_importance
 from optuna.importance._base import BaseImportanceEvaluator
 from optuna.importance._ped_anova.scott_parzen_estimator import _build_parzen_estimator
-from optuna.study import Study
 from optuna.study import StudyDirection
-from optuna.trial import FrozenTrial
+
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from optuna.distributions import BaseDistribution
+    from optuna.study import Study
+    from optuna.trial import FrozenTrial
 
 
 class _QuantileFilter:
@@ -236,7 +241,7 @@ class PedAnovaImportanceEvaluator(BaseImportanceEvaluator):
         non_single_dists = {name: dist for name, dist in dists.items() if not dist.single()}
         single_dists = {name: dist for name, dist in dists.items() if dist.single()}
         if len(non_single_dists) == 0:
-            return {}
+            return {k: 0.0 for k in single_dists}
 
         trials = _get_filtered_trials(study, params=params, target=target)
         # The following should be tested at _get_filtered_trials.

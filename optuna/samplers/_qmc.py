@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
 import threading
 from typing import Any
 from typing import TYPE_CHECKING
@@ -21,6 +20,8 @@ from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from optuna.study import Study
 
 
@@ -167,11 +168,7 @@ class QMCSampler(BaseSampler):
         if qmc_type in ("halton", "sobol"):
             self._qmc_type = qmc_type
         else:
-            message = (
-                f'The `qmc_type`, "{qmc_type}", is not a valid. '
-                'It must be one of "halton" and "sobol".'
-            )
-            raise ValueError(message)
+            raise ValueError(f"The `{qmc_type=}` is invalid. Choose either `halton` or `sobol`.")
 
         if seed is None and scramble and warn_asynchronous_seeding:
             # Sobol/Halton sequences without scrambling do not use seed.

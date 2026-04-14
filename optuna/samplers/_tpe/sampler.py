@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from collections.abc import Sequence
 from functools import lru_cache
 import json
 import math
@@ -17,8 +15,6 @@ from optuna._experimental import warn_experimental_argument
 from optuna._hypervolume import compute_hypervolume
 from optuna._hypervolume.hssp import _solve_hssp
 from optuna._warnings import optuna_warn
-from optuna.distributions import BaseDistribution
-from optuna.distributions import CategoricalChoiceType
 from optuna.logging import get_logger
 from optuna.samplers._base import _CONSTRAINTS_KEY
 from optuna.samplers._base import _INDEPENDENT_SAMPLING_WARNING_TEMPLATE
@@ -39,6 +35,11 @@ from optuna.trial import TrialState
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from collections.abc import Sequence
+
+    from optuna.distributions import BaseDistribution
+    from optuna.distributions import CategoricalChoiceType
     from optuna.study import Study
 
 
@@ -455,7 +456,7 @@ class TPESampler(BaseSampler):
         if len(trials) < self._n_startup_trials:
             return {}
 
-        return self._sample(study, trial, search_space, use_trial_cache=True)
+        return self._sample(study, trial, search_space)
 
     def sample_independent(
         self,
@@ -483,15 +484,13 @@ class TPESampler(BaseSampler):
                         independent_sampler_name=self._random_sampler.__class__.__name__,
                         sampler_name=self.__class__.__name__,
                         fallback_reason=(
-                            "dynamic search space is not supported for `multivariate=True`"
+                            "`multivariate=True,group=False` does not support dynamic search space"
+                            " (but `multivariate=True,group=True` works)"
                         ),
                     )
                 )
 
-        search_space = {param_name: param_distribution}
-        return self._sample(study, trial, search_space, use_trial_cache=not self._constant_liar)[
-            param_name
-        ]
+        return self._sample(study, trial, {param_name: param_distribution})[param_name]
 
     def _get_params(self, trial: FrozenTrial) -> dict[str, Any]:
         if trial.state.is_finished() or not self._multivariate:
@@ -524,17 +523,14 @@ class TPESampler(BaseSampler):
         return {k: np.asarray(v) for k, v in values.items()}
 
     def _sample(
-        self,
-        study: Study,
-        trial: FrozenTrial,
-        search_space: dict[str, BaseDistribution],
-        use_trial_cache: bool,
+        self, study: Study, trial: FrozenTrial, search_space: dict[str, BaseDistribution]
     ) -> dict[str, Any]:
         if self._constant_liar:
             states = [TrialState.COMPLETE, TrialState.PRUNED, TrialState.RUNNING]
         else:
             states = [TrialState.COMPLETE, TrialState.PRUNED]
-        trials = study._get_trials(deepcopy=False, states=states, use_cache=use_trial_cache)
+        use_cache = not self._constant_liar
+        trials = study._get_trials(deepcopy=False, states=states, use_cache=use_cache)
 
         if self._constant_liar:
             # For constant_liar, filter out the current trial.
@@ -742,9 +738,9 @@ def _split_complete_trials_single_objective(
     trials: Sequence[FrozenTrial], study: Study, n_below: int
 ) -> tuple[list[FrozenTrial], list[FrozenTrial]]:
     if study.direction == StudyDirection.MINIMIZE:
-        sorted_trials = sorted(trials, key=lambda trial: cast(float, trial.value))
+        sorted_trials = sorted(trials, key=lambda trial: cast("float", trial.value))
     else:
-        sorted_trials = sorted(trials, key=lambda trial: cast(float, trial.value), reverse=True)
+        sorted_trials = sorted(trials, key=lambda trial: cast("float", trial.value), reverse=True)
     return sorted_trials[:n_below], sorted_trials[n_below:]
 
 
@@ -779,7 +775,7 @@ def _split_complete_trials_multi_objective(
         )
         indices_below = np.append(indices_below, selected_indices)
 
-    below_indices_set = set(cast(list, indices_below.tolist()))
+    below_indices_set = set(cast("list", indices_below.tolist()))
     below_trials = [trials[i] for i in range(len(trials)) if i in below_indices_set]
     above_trials = [trials[i] for i in range(len(trials)) if i not in below_indices_set]
     return below_trials, above_trials
