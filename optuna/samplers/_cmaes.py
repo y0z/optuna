@@ -12,6 +12,7 @@ import numpy as np
 import optuna
 from optuna import _deprecated
 from optuna import logging
+from optuna._convert_positional_args import convert_positional_args
 from optuna._experimental import warn_experimental_argument
 from optuna._imports import _LazyImport
 from optuna._transform import _SearchSpaceTransform
@@ -118,10 +119,20 @@ class CmaEsSampler(BaseSampler):
             within the search space domain for each restart if you specify ``restart_strategy``
             argument.
 
+            .. warning::
+                Deprecated in v4.9.0. ``sigma0`` argument will be removed in the future.
+                The removal of this feature is currently scheduled for v6.0.0,
+                but this schedule is subject to change.
+
         sigma0:
             Initial standard deviation of CMA-ES. By default, ``sigma0`` is set to
             ``min_range / 6``, where ``min_range`` denotes the minimum range of the distributions
             in the search space.
+
+            .. warning::
+                Deprecated in v4.9.0. ``sigma0`` argument will be removed in the future.
+                The removal of this feature is currently scheduled for v6.0.0,
+                but this schedule is subject to change.
 
         seed:
             A random seed for CMA-ES.
@@ -238,7 +249,7 @@ class CmaEsSampler(BaseSampler):
             similar HPO tasks through the initialization of CMA-ES. This method estimates a
             promising distribution from ``source_trials`` and generates the parameter of
             multivariate gaussian distribution. Please note that it is prohibited to use
-            ``x0``, ``sigma0``, or ``use_separable_cma`` argument together.
+            ``use_separable_cma`` argument together.
 
             .. note::
                 Added in v2.6.0 as an experimental feature. The interface may change in newer
@@ -247,6 +258,19 @@ class CmaEsSampler(BaseSampler):
 
     """  # NOQA: E501
 
+    @convert_positional_args(
+        previous_positional_arg_names=[
+            "self",
+            "x0",
+            "sigma0",
+            "n_startup_trials",
+            "independent_sampler",
+            "warn_independent_sampling",
+            "seed",
+        ],
+        deprecated_version="4.9.0",
+        removed_version="6.0.0",
+    )
     def __init__(
         self,
         x0: dict[str, Any] | None = None,
@@ -274,6 +298,16 @@ class CmaEsSampler(BaseSampler):
                 "`None`. `restart_strategy` will be supported in OptunaHub.",
                 FutureWarning,
             )
+        if x0 is not None:
+            msg = _deprecated._DEPRECATION_WARNING_TEMPLATE.format(
+                name="`x0`", d_ver="4.9.0", r_ver="6.0.0"
+            )
+            optuna_warn(msg, FutureWarning)
+        if sigma0 is not None:
+            msg = _deprecated._DEPRECATION_WARNING_TEMPLATE.format(
+                name="`sigma0`", d_ver="4.9.0", r_ver="6.0.0"
+            )
+            optuna_warn(msg, FutureWarning)
 
         self._x0 = x0
         self._sigma0 = sigma0
