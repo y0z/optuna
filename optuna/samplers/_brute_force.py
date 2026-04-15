@@ -82,12 +82,13 @@ class _TreeNode:
 
     def sample_child(self, rng: np.random.RandomState, exclude_running: bool) -> float:
         assert self.children is not None
-        # Sample an unexpanded node in the subtree uniformly, and return the first
-        # parameter value in the path to the node.
-        # Equivalently, we sample the child node with weights proportional to the number
-        # of unexpanded nodes in the subtree.
+        # Sample uniformly from available choices to avoid biasing towards
+        # branches that have already been partially explored.
         weights = np.array(
-            [child.count_unexpanded(exclude_running) for child in self.children.values()],
+            [
+                1.0 if child.count_unexpanded(exclude_running) > 0 else 0.0
+                for child in self.children.values()
+            ],
             dtype=np.float64,
         )
         if any(
