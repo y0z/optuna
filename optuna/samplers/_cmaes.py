@@ -273,13 +273,13 @@ class CmaEsSampler(BaseSampler):
     )
     def __init__(
         self,
+        *,
         x0: dict[str, Any] | None = None,
         sigma0: float | None = None,
         n_startup_trials: int = 1,
         independent_sampler: BaseSampler | None = None,
         warn_independent_sampling: bool = True,
         seed: int | None = None,
-        *,
         consider_pruned_trials: bool = False,
         restart_strategy: str | None = None,
         popsize: int | None = None,
