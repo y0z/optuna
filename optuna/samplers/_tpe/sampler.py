@@ -506,7 +506,12 @@ class TPESampler(BaseSampler):
 
         if len(params_strs) == 0:
             return trial.params
-        params = json.loads("".join(params_strs))
+        try:
+            params = json.loads("".join(params_strs))
+        except json.JSONDecodeError:
+            # A race condition can occur when multiple workers write chunks
+            # concurrently. If the JSON is incomplete, fall back to trial.params.
+            return trial.params
         params.update(trial.params)
         return params
 
