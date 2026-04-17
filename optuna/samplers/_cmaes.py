@@ -73,13 +73,10 @@ class CmaEsSampler(BaseSampler):
             study.optimize(objective, n_trials=20)
 
     Please note that this sampler does not support CategoricalDistribution.
-    However, :class:`~optuna.distributions.FloatDistribution` with ``step``,
-    (:func:`~optuna.trial.Trial.suggest_float`) and
-    :class:`~optuna.distributions.IntDistribution` (:func:`~optuna.trial.Trial.suggest_int`)
-    are supported.
+    If your search space includes categorical parameters, it is recommended to use
+    `CatCmawmSampler <https://hub.optuna.org/samplers/catcmawm/>`__ available on
+    `OptunaHub <https://hub.optuna.org/>`__.
 
-    If your search space contains categorical parameters, I recommend you
-    to use :class:`~optuna.samplers.TPESampler` instead.
     Furthermore, there is room for performance improvements in parallel
     optimization settings. This sampler cannot use some trials for updating
     the parameters of multivariate normal distribution.
