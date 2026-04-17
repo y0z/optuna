@@ -120,7 +120,7 @@ class CmaEsSampler(BaseSampler):
             argument.
 
             .. warning::
-                Deprecated in v4.9.0. ``sigma0`` argument will be removed in the future.
+                Deprecated in v4.9.0. ``x0`` argument will be removed in the future.
                 The removal of this feature is currently scheduled for v6.0.0,
                 but this schedule is subject to change.
 
