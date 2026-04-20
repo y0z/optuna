@@ -50,7 +50,7 @@ class QMCSampler(BaseSampler):
     see the Scipy API references on `scipy.stats.qmc
     <https://scipy.github.io/devdocs/reference/stats.qmc.html>`__.
 
-    .. note:
+    .. note::
         If your search space contains categorical parameters, it samples the categorical
         parameters by its `independent_sampler` without using QMC algorithm.
 
